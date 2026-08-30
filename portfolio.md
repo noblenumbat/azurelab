@@ -84,3 +84,61 @@
 ## Checking DNS
 ![vm-46](/Images/Screenshot_45.png)
 ![vm-47](/Images/Screenshot_46.png)   
+
+# Resolviendo problemas de conexión RDP 
+
+Luego de eliminar el recurso Bastion de Azure, intente conectarme de forma nativa por medio de una sesión de escritorio remoto pero la comunicación fallo.
+
+![vm-48](/Images/Screenshot_50.png)
+![vm-49](/Images/Screenshot_51.png)
+
+Ahora no tenia manera de acceder a la VM ya que había eliminado el recurso Bastion, así que no tuve de otra que volver a implementar dicho recurso para acceder remotamente a la maquina virtual.
+
+## Implementando nuevamente Bastion
+
+![vm-50](/Images/Screenshot_53.png)
+![vm-51](/Images/Screenshot_54.png)
+![vm-52](/Images/Screenshot_55.png)
+![vm-70](/Images/Screenshot_73.png)
+![vm-71](/Images/Screenshot_74.png)
+![vm-72](/Images/Screenshot_75.png)
+
+Ya conectado valide que los servicios de Administración Remota y Escritorio Remoto estuvieran habilitados, y efectivamente si estaban habilitados.
+
+![vm-53](/Images/Screenshot_56.png)
+
+
+## Creando una regla de entrada para el puerto TCP 3389
+
+con el objetivo de crear una regla de entrada en el Firewall de Windows Defender con el puerto TCP 3389 es permitir el acceso a la VM por escritorio remoto y sin necesidad de usar Bastion.
+
+![vm-56](/Images/Screenshot_59.png)
+![vm-57](/Images/Screenshot_60.png)
+![vm-58](/Images/Screenshot_61.png)
+![vm-59](/Images/Screenshot_62.png)
+![vm-60](/Images/Screenshot_63.png)
+![vm-61](/Images/Screenshot_64.png)
+![vm-62](/Images/Screenshot_65.png)
+![vm-63](/Images/Screenshot_66.png)
+![vm-64](/Images/Screenshot_67.png)
+![vm-65](/Images/Screenshot_68.png)
+
+Me asegure de que el tipo de inicio del Servicio Remoto estuviera ejecutandose y en automatico. 
+
+![vm-66](/Images/Screenshot_69.png)
+![vm-67](/Images/Screenshot_70.png)
+![vm-68](/Images/Screenshot_71.png)
+
+También verifique la escucha del puerto 3389
+
+![vm-69](/Images/Screenshot_72.png)
+ 
+## Creando una regla de entrada en Azure para el puerto TCP 3389 
+
+Adicionalmente no habia una regla creada para el puerto 3389 en Configuraciones de red de Azure. Asi que procedi a crear la regla de entrada para conectarme a través de mi dirección IP (esto restrige a además que cualquiera intente conectarse a mi VM una vez este iniciada).
+
+![vm-54](/Images/Screenshot_57.png)
+![vm-73](/Images/Screenshot_73.png)
+![vm-74](/Images/Screenshot_74.png)
+![vm-76](/Images/Screenshot_76.png)
+![vm-75](/Images/Screenshot_75.png)
