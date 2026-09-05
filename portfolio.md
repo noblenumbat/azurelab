@@ -3,6 +3,7 @@
 1. [Adding role Active Directory](#promoving-my-server-as-domain-controller)
 1. [Promoving my server as Domain Controller](#promoving-my-server-as-domain-controller)
 1. [Checking configurations after promotion AD DS](#checking-configurations-after-promotion-ad-ds)
+1. [Troubleshooting RDP Connection Issues](#troubleshooting-rdp-connection-issues)
 
 
 # Here is how I configured a Windows Server 2022 VM in Azure
@@ -85,32 +86,28 @@
 ![vm-46](/Images/Screenshot_45.png)
 ![vm-47](/Images/Screenshot_46.png)   
 
-# Resolviendo problemas de conexión RDP 
+# Troubleshooting RDP Connection Issues 
 
-Luego de eliminar el recurso Bastion de Azure, intente conectarme de forma nativa por medio de una sesión de escritorio remoto pero la comunicación fallo.
+After deleting the Azure Bastion resource to avoid generating more costs, I realized that I had lose the connection to my virtual machine, I tried to connect using the native way throught Remote Desk, but it failed.
 
 ![vm-48](/Images/Screenshot_50.png)
 ![vm-49](/Images/Screenshot_51.png)
 
-Ahora no tenia manera de acceder a la VM ya que había eliminado el recurso Bastion, así que no tuve de otra que volver a implementar dicho recurso para acceder remotamente a la maquina virtual.
+Now I can't access the VM because I deleted the Azure Bastion resource temporarily, so I must deploy that resource again to access the machine remotely.
 
-## Implementando nuevamente Bastion
+## Deploy Bastion temporarily
 
 ![vm-50](/Images/Screenshot_53.png)
 ![vm-51](/Images/Screenshot_54.png)
 ![vm-52](/Images/Screenshot_55.png)
-![vm-70](/Images/Screenshot_73.png)
-![vm-71](/Images/Screenshot_74.png)
-![vm-72](/Images/Screenshot_75.png)
 
-Ya conectado valide que los servicios de Administración Remota y Escritorio Remoto estuvieran habilitados, y efectivamente si estaban habilitados.
+Once I was connected, I checked the Remote Desktop services in the Administration settings, and they were effectively enabled.
 
 ![vm-53](/Images/Screenshot_56.png)
 
+## Creating an inbound rule for TCP port 3389 on the virtual machine
 
-## Creando una regla de entrada para el puerto TCP 3389
-
-con el objetivo de crear una regla de entrada en el Firewall de Windows Defender con el puerto TCP 3389 es permitir el acceso a la VM por escritorio remoto y sin necesidad de usar Bastion.
+The goal is to create an inbound rule in Windows Defender Firewall using TCP port 3389 to allow the access to the VM through Remote Desktop. 
 
 ![vm-56](/Images/Screenshot_59.png)
 ![vm-57](/Images/Screenshot_60.png)
@@ -123,22 +120,28 @@ con el objetivo de crear una regla de entrada en el Firewall de Windows Defender
 ![vm-64](/Images/Screenshot_67.png)
 ![vm-65](/Images/Screenshot_68.png)
 
-Me asegure de que el tipo de inicio del Servicio Remoto estuviera ejecutandose y en automatico. 
+I made sure that the Remote Desktop Services were running and set to automatic.
 
 ![vm-66](/Images/Screenshot_69.png)
 ![vm-67](/Images/Screenshot_70.png)
 ![vm-68](/Images/Screenshot_71.png)
 
-También verifique la escucha del puerto 3389
+Also, I checked that TCP port 3389 was listening. 
 
 ![vm-69](/Images/Screenshot_72.png)
  
-## Creando una regla de entrada en Azure para el puerto TCP 3389 
+## Creating an inbound security rule in Azure for TCP port 3389
 
-Adicionalmente no habia una regla creada para el puerto 3389 en Configuraciones de red de Azure. Asi que procedi a crear la regla de entrada para conectarme a través de mi dirección IP (esto restrige a además que cualquiera intente conectarse a mi VM una vez este iniciada).
+One more thing: there was no inbound security rule for TCP port 3389 in Azure's network configuration. Then, I created an inbound rule to allow connections only from my IP address. This restricts anyone else from trying to connect to my VM once it is started.
 
-![vm-54](/Images/Screenshot_57.png)
 ![vm-73](/Images/Screenshot_73.png)
-![vm-74](/Images/Screenshot_74.png)
+![vm-71](/Images/Screenshot_74.png)
+![vm-72](/Images/Screenshot_75.png)
 ![vm-76](/Images/Screenshot_76.png)
-![vm-75](/Images/Screenshot_75.png)
+
+## Deleting Bastion and testing the Remote Desktop connection
+
+![vm-88](/Images/Screenshot_88.png)
+![vm-89](/Images/Screenshot_89.png)
+![vm-90](/Images/Screenshot_90.png)
+![vm-91](/Images/Screenshot_91.png)
