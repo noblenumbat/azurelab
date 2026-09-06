@@ -4,7 +4,9 @@
 1. [Promoving my server as Domain Controller](#promoving-my-server-as-domain-controller)
 1. [Checking configurations after promotion AD DS](#checking-configurations-after-promotion-ad-ds)
 1. [Troubleshooting RDP Connection Issues](#troubleshooting-rdp-connection-issues)
+1. [Crear y eliminar usuarios en Active Directory](#crear-y-eliminar-usuarios-en-active-directory)
 
+---
 
 # Here is how I configured a Windows Server 2022 VM in Azure
 
@@ -145,3 +147,37 @@ One more thing: there was no inbound security rule for TCP port 3389 in Azure's 
 ![vm-89](/Images/Screenshot_89.png)
 ![vm-90](/Images/Screenshot_90.png)
 ![vm-91](/Images/Screenshot_91.png)
+
+## Crear y eliminar usuarios en Active Directory
+
+Los usuarios se pueden definir como objetos del controlador de dominio y pueden ser creados desde `Usuarios y Equipos de Active Directory` o desde el `Centro de Administración de Active Directory`.
+
+### Creando usuarios desde: Usuarios y equipos de Active Directory
+
+![vm-98](/Images/Screenshot_98.png)
+![vm-99](/Images/Screenshot_99.png)
+![vm-100](/Images/Screenshot_100.png)
+![vm-101](/Images/Screenshot_101.png)
+![vm-102](/Images/Screenshot_102.png)
+![vm-103](/Images/Screenshot_103.png)
+![vm-104](/Images/Screenshot_104.png)
+
+### Creando usuarios desde: Centro de Administración de Active Directory
+
+![vm-105](/Images/Screenshot_105.png)
+![vm-106](/Images/Screenshot_106.png)
+![vm-107](/Images/Screenshot_107.png)
+![vm-108](/Images/Screenshot_108.png)
+![vm-109](/Images/Screenshot_109.png)
+![vm-110](/Images/Screenshot_110.png)
+![vm-111](/Images/Screenshot_111.png)
+
+### Crear miles de usuarios de Active Directory con PowerShell
+
+Es muy útil cuando queremos automatizar la creación masiva de usuarios para ahorrar tiempo, solo es necesario editar un archivo delimitado por comas `.csv` con los campos de los atributos de usuario y un Script de PowerShell.
+
+> [!Note]
+>
+> Desmenuzar el archivo de prueba proporcionado en el curso
+> para construir mi propio script y archivo csv para crear usuarios de un solo golpe.
+> Tener en cuenta este comando `Get-ADDomain` para halar los datos claves del controlador de dominio.
