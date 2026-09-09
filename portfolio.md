@@ -148,11 +148,11 @@ One more thing: there was no inbound security rule for TCP port 3389 in Azure's 
 ![vm-90](/Images/Screenshot_90.png)
 ![vm-91](/Images/Screenshot_91.png)
 
-## Crear y eliminar usuarios en Active Directory
+## Create and delete users in Active Directory
 
-Los usuarios se pueden definir como objetos del controlador de dominio y pueden ser creados desde `Usuarios y Equipos de Active Directory` o desde el `Centro de Administración de Active Directory`.
+Users can be defined as objects in a domain controller, and they can be created using `Active Directory Users and Computers` or `Active Directory Administrative Center`.
 
-### Creando usuarios desde: Usuarios y equipos de Active Directory
+### Creating a user using Active Directory Users and Computers
 
 ![vm-98](/Images/Screenshot_98.png)
 ![vm-99](/Images/Screenshot_99.png)
@@ -162,7 +162,7 @@ Los usuarios se pueden definir como objetos del controlador de dominio y pueden 
 ![vm-103](/Images/Screenshot_103.png)
 ![vm-104](/Images/Screenshot_104.png)
 
-### Creando usuarios desde: Centro de Administración de Active Directory
+### Creating a user using Active Directory Administrative Center
 
 ![vm-105](/Images/Screenshot_105.png)
 ![vm-106](/Images/Screenshot_106.png)
