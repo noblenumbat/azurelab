@@ -178,6 +178,43 @@ Es muy útil cuando queremos automatizar la creación masiva de usuarios para ah
 
 > [!Note]
 >
-> Desmenuzar el archivo de prueba proporcionado en el curso
+> Desmenuzar los archivos de prueba proporcionados en el curso.
 > para construir mi propio script y archivo csv para crear usuarios de un solo golpe.
 > Tener en cuenta este comando `Get-ADDomain` para halar los datos claves del controlador de dominio.
+
+**Descripción de los campos del archivo para creación de usuarios.**
+
+- `userPrincipalName` es el nombre de inicio de sesión de usuario en el dominio. Ejemplo: `juan.perez@empresa.com`.
+
+- `sAMAccountName` nombre de inicio de sesión del usuario tradicional en Active Directory. Ejemplo: `jperez`.
+
+- `Name` es el nombre del objeto del usuario dentro de Active Directory. Sirve para identificarlo y diferenciarlo de otros usuarios dentro del directorio. Ejemplo: `Juan Pérez`.
+
+- `GivenName` es nombre de pila o el primer nombre de la persona. Ejemplo: `Juan`.
+
+- `SurName` es el apellido de la persona. Ejemplo: `Pérez`. 
+
+- `Title` es el cargo, título o posición laboral que ocupa la persona dentro de la organización. Ejemplo: `Analista de Sistemas`. 
+
+- `Department` es el departamento o área de la empresa a la que pertenece el usuario. Ejemplo: `Tecnología`.
+
+- `Company` es el nombre de la empresa u organización a la que pertenece el usuario. Ejemplo: `Tar-get`.
+
+- `EmailAdress` es la dirección de correo electrónica asociada al usuario. Ejemplo: `juan.perez@empresa.com`.
+
+> [!Note]
+>
+> Aunque pueden tener el mismo valor, no necesariamente tienen que ser iguales.
+>
+> Diferencia con `userPrincipalName`:
+>
+> `EmailAddress` → correo electrónico del usuario.
+>
+> `userPrincipalName` → identificador que utiliza el usuario para iniciar sesión en el dominio.
+
+- `Description` es un campo de texto libre para agregar información adicional o una descripción sobre el usuario. Ejemplo: `Usuario del área de soporte técnico`.
+
+- `Country` es el país donde esta ubicada la persona, oficina o entidad a la que pertenece el usuario. Ejemplo: `Colombia`.
+ 
+
+
