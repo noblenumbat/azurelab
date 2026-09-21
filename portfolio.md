@@ -184,13 +184,13 @@ Es muy útil cuando queremos automatizar la creación masiva de usuarios para ah
 
 **Descripción de los campos del archivo para creación de usuarios.**
 
-- `userPrincipalName` es el nombre de inicio de sesión de usuario en el dominio. Ejemplo: `juan.perez@empresa.com`.
+- `userPrincipalName` es el nombre de inicio de sesión de usuario en el dominio. Ejemplo: `jperez@empresa.com`.
 
 - `sAMAccountName` nombre de inicio de sesión del usuario tradicional en Active Directory. Ejemplo: `jperez`.
 
 - `Name` es el nombre del objeto del usuario dentro de Active Directory. Sirve para identificarlo y diferenciarlo de otros usuarios dentro del directorio. Ejemplo: `Juan Pérez`.
 
-- `GivenName` es nombre de pila o el primer nombre de la persona. Ejemplo: `Juan`.
+- `GivenName` es el nombre de pila o el primer nombre de la persona. Ejemplo: `Juan`.
 
 - `SurName` es el apellido de la persona. Ejemplo: `Pérez`. 
 
@@ -208,13 +208,16 @@ Es muy útil cuando queremos automatizar la creación masiva de usuarios para ah
 >
 > Diferencia con `userPrincipalName`:
 >
-> `EmailAddress` → correo electrónico del usuario.
+> `EmailAddress` → correo electrónico del usuario. `juan.perez@empresa.com`
 >
-> `userPrincipalName` → identificador que utiliza el usuario para iniciar sesión en el dominio.
+> `userPrincipalName` → identificador que utiliza el usuario para iniciar sesión en el dominio.  `jperez@empresa.com`
 
 - `Description` es un campo de texto libre para agregar información adicional o una descripción sobre el usuario. Ejemplo: `Usuario del área de soporte técnico`.
 
 - `Country` es el país donde esta ubicada la persona, oficina o entidad a la que pertenece el usuario. Ejemplo: `Colombia`.
- 
+
+**Descripción del Script PowerShell para la creación de usuarios**
+
+![vm-112](/Images/Screenshot_112.png) 
 
 
