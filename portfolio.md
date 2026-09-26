@@ -172,17 +172,32 @@ Users can be defined as objects in a domain controller, and they can be created 
 ![vm-110](/Images/Screenshot_110.png)
 ![vm-111](/Images/Screenshot_111.png)
 
-### Crear miles de usuarios de Active Directory con PowerShell
+### Crear de un solo golpe muchos usuarios de Active Directory en PowerShell
 
-Es muy útil cuando queremos automatizar la creación masiva de usuarios para ahorrar tiempo, solo es necesario editar un archivo delimitado por comas `.csv` con los campos de los atributos de usuario y un Script de PowerShell.
+Es muy útil cuando queremos crear masivamente usuarios para ahorrar tiempo, solo es necesario crear un archivo delimitado por comas `.csv` con los campos de los atributos de usuario y sus valores. 
 
-> [!Note]
->
-> Desmenuzar los archivos de prueba proporcionados en el curso.
-> para construir mi propio script y archivo csv para crear usuarios de un solo golpe.
-> Tener en cuenta este comando `Get-ADDomain` para halar los datos claves del controlador de dominio.
+Por otro lado un Script para ejecutar desde PowerShell.
 
-**Descripción de los campos del archivo para creación de usuarios.**
+¿Como funciona?
+
+Ponemos ambos archivos en una misma carpeta
+
+1. Abrimos PowerShell y ejecutamos el script `.\CreateUserAD.ps1`
+   ![vm-114](/Images/Screenshot_114.png) 
+
+1. El script invoca al csv con que contiene los datos de los usuarios a crear, y esta es la salida que confirma la creación de los objetos (los usuarios).
+   ![vm-115](/Images/Screenshot_115.png) 
+
+1. Vista de los usuarios desde Active Directory Administrative Center.
+   ![vm-116](/Images/Screenshot_116.png) 
+   ![vm-117](/Images/Screenshot_117.png)
+
+
+**ARCHIVOS**
+
+**Script:** en mi laboratorio el script que invoca el csv se llama "CreateUserAD.ps1". 
+
+Descripción de los campos del script para crear usuarios.
 
 - `userPrincipalName` es el nombre de inicio de sesión de usuario en el dominio. Ejemplo: `jperez@empresa.com`.
 
@@ -216,8 +231,23 @@ Es muy útil cuando queremos automatizar la creación masiva de usuarios para ah
 
 - `Country` es el país donde esta ubicada la persona, oficina o entidad a la que pertenece el usuario. Ejemplo: `Colombia`.
 
-**Descripción del Script PowerShell para la creación de usuarios**
+
+**Contenido del Script PowerShell para la creación de usuarios**
 
 ![vm-112](/Images/Screenshot_112.png) 
+
+**Archivo csv:** tiene por nombre "ListUsersAD.csv".
+
+**Vista del csv**
+
+Al final de cada línea hay 14 ";" y los delimitadores de cada campo es una coma ",".
+
+![vm-113](/Images/Screenshot_113.png) 
+
+
+
+
+
+
 
 
