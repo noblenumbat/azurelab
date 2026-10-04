@@ -4,7 +4,9 @@
 1. [Promoving my server as Domain Controller](#promoving-my-server-as-domain-controller)
 1. [Checking configurations after promotion AD DS](#checking-configurations-after-promotion-ad-ds)
 1. [Troubleshooting RDP Connection Issues](#troubleshooting-rdp-connection-issues)
-1. [Crear y eliminar usuarios en Active Directory](#crear-y-eliminar-usuarios-en-active-directory)
+1. [Create and delete users in Active Directory](#create-and-delete-users-in-active-directory)
+1. [Solucionando inicio remoto de sesión con una de las cuentas creadas](#solucionando-inicio-remoto-de-sesión-con-una-de-las-cuentas-creadas)
+1. [Configurando política de seguridad para intentos fallidos por claves NO válidas](#configurando-política-de-seguridad-para-intentos-fallidos-por-claves-no-válidas)
 
 ---
 
@@ -172,77 +174,151 @@ Users can be defined as objects in a domain controller, and they can be created 
 ![vm-110](/Images/Screenshot_110.png)
 ![vm-111](/Images/Screenshot_111.png)
 
-### Crear de un solo golpe muchos usuarios de Active Directory en PowerShell
+### Create multiple Active Directory Users in one go using PowerShell
 
-Es muy útil cuando queremos crear masivamente usuarios para ahorrar tiempo, solo es necesario crear un archivo delimitado por comas `.csv` con los campos de los atributos de usuario y sus valores. 
+It's very useful when you want to create users in bulk to save time. All you have to do is create a `.csv` file with the user attribute fields and their values. 
 
-Por otro lado un Script para ejecutar desde PowerShell.
+On the other hand, a script to run from PowerShell.
 
-¿Como funciona?
+How does it work?
 
-Ponemos ambos archivos en una misma carpeta
+We put both files in the same folder
 
-1. Abrimos PowerShell y ejecutamos el script `.\CreateUserAD.ps1`
+1. Open PowerShell and run the script `.\CreateUserAD.ps1`
    ![vm-114](/Images/Screenshot_114.png) 
 
-1. El script invoca al csv con que contiene los datos de los usuarios a crear, y esta es la salida que confirma la creación de los objetos (los usuarios).
+1. The script calls the `csv` file containing the data for the users to be created, and this is the output confirming the creation of objects (the users).
    ![vm-115](/Images/Screenshot_115.png) 
 
-1. Vista de los usuarios desde Active Directory Administrative Center.
+1. Viewing users from the Active Directory Administrative Center.
    ![vm-116](/Images/Screenshot_116.png) 
    ![vm-117](/Images/Screenshot_117.png)
 
 
-**ARCHIVOS**
+**FILES**
 
-**Script:** en mi laboratorio el script que invoca el csv se llama "CreateUserAD.ps1". 
+**Script:** In my lab, the script that calls `csv` is called "CreateUserAD.ps1". 
 
-Descripción de los campos del script para crear usuarios.
+Description of the fields in the script for creating users.
 
-- `userPrincipalName` es el nombre de inicio de sesión de usuario en el dominio. Ejemplo: `jperez@empresa.com`.
+- `userPrincipalName` is the user's login name in the domain. Example: `jperez@empresa.com`.
 
-- `sAMAccountName` nombre de inicio de sesión del usuario tradicional en Active Directory. Ejemplo: `jperez`.
+- `sAMAccountName` Traditional user login name in Active Directory. Example: `jperez`.
 
-- `Name` es el nombre del objeto del usuario dentro de Active Directory. Sirve para identificarlo y diferenciarlo de otros usuarios dentro del directorio. Ejemplo: `Juan Pérez`.
+- `Name` It is the name of the user object in Active Directory. It is used to identify the user and distinguish them from other users in the directory. Example: `Juan Pérez`.
 
-- `GivenName` es el nombre de pila o el primer nombre de la persona. Ejemplo: `Juan`.
+- `GivenName` is the person's first name. Example: `Juan`.
 
-- `SurName` es el apellido de la persona. Ejemplo: `Pérez`. 
+- `SurName` is the person's last name. Example: `Pérez`. 
 
-- `Title` es el cargo, título o posición laboral que ocupa la persona dentro de la organización. Ejemplo: `Analista de Sistemas`. 
+- `Title` It is the job title, position, or role that a person holds within the organization. Example: `Analista de Sistemas`. 
 
-- `Department` es el departamento o área de la empresa a la que pertenece el usuario. Ejemplo: `Tecnología`.
+- `Department` is the department or division of the company to which the user belongs. Example: `Tecnología`.
 
-- `Company` es el nombre de la empresa u organización a la que pertenece el usuario. Ejemplo: `Tar-get`.
+- `Company` this is the name of the company or organization to which the user belongs. Example: `Tar-get`.
 
-- `EmailAdress` es la dirección de correo electrónica asociada al usuario. Ejemplo: `juan.perez@empresa.com`.
+- `EmailAdress` is the email address associated with the user. Example: `juan.perez@empresa.com`.
 
 > [!Note]
 >
-> Aunque pueden tener el mismo valor, no necesariamente tienen que ser iguales.
+> Although they may have the same value, they do not necessarily have to be the same.
 >
-> Diferencia con `userPrincipalName`:
+> Difference from `userPrincipalName`:
 >
-> `EmailAddress` → correo electrónico del usuario. `juan.perez@empresa.com`
+> `EmailAddress` → user's email address. `juan.perez@empresa.com`
 >
-> `userPrincipalName` → identificador que utiliza el usuario para iniciar sesión en el dominio.  `jperez@empresa.com`
+> `userPrincipalName` → the identifier that the user uses to log in to the domain.  `jperez@empresa.com`
 
-- `Description` es un campo de texto libre para agregar información adicional o una descripción sobre el usuario. Ejemplo: `Usuario del área de soporte técnico`.
+- `Description` This is a free-form text field for adding additional information or description about the user. Example: `Usuario del área de soporte técnico`.
 
-- `Country` es el país donde esta ubicada la persona, oficina o entidad a la que pertenece el usuario. Ejemplo: `Colombia`.
+- `Country` is the country where the person, office, or entity to which the user belongs is located. Example: `Colombia`.
 
 
-**Contenido del Script PowerShell para la creación de usuarios**
+**Content of the PowerShell script for creating users**
 
 ![vm-112](/Images/Screenshot_112.png) 
 
-**Archivo csv:** tiene por nombre "ListUsersAD.csv".
+**csv file:** tiene por nombre "ListUsersAD.csv".
 
-**Vista del csv**
+**csv view**
 
-Al final de cada línea hay 14 ";" y los delimitadores de cada campo es una coma ",".
+At the end of each line, there are 14 ";" characters, and the delimiters for each fiel are ",".
 
 ![vm-113](/Images/Screenshot_113.png) 
+
+## Solucionando inicio remoto de sesión con una de las cuentas creadas
+
+    `romeo@jcastillo.com `
+    
+Resulta el primer error al tratar de iniciar sesión remotamente.
+
+![vm-118](/Images/Screenshot_118.png) 
+
+
+- Debo añadir al usuario al grupo de Usuarios de Escritorio Remoto.
+
+![vm-119](/Images/Screenshot_119.png) 
+![vm-120](/Images/Screenshot_120.png) 
+
+- Intentar nuevamente el inicio de sesión.
+
+![vm-121](/Images/Screenshot_121.png)
+
+- Sigue apareciendo el mismo error: esto pasa por que el equipo al que intento conectarme es un controlador de dominio.
+
+![vm-122](/Images/Screenshot_122.png)
+
+- Para resolver esto debo añadir al usuario al grupo de administradores de dominio.
+
+![vm-123](/Images/Screenshot_123.png)
+![vm-124](/Images/Screenshot_124.png)
+
+- Intentamos nuevamente.
+
+![vm-125](/Images/Screenshot_125.png)
+
+- Listo.
+
+![vm-126](/Images/Screenshot_126.png)
+
+
+## Configurando política de seguridad para intentos fallidos por claves NO válidas
+
+1. Ingreso al administrador de directivas de grupo.
+
+    ![vm-127](/Images/Screenshot_127.png)
+
+1. Me dirijo a Group Policy Management.
+
+1. Despliego el bosque y edito las politicas por defecto del dominio.
+
+    ![vm-128](/Images/Screenshot_128.png)
+
+1. Depliego la ruta: `Computer Configuration->Policies->Windows Settings->Security Settings->Account Lockout Policy`
+    
+    ![vm-129](/Images/Screenshot_129.png)
+
+1. Entrar a las propiedades de la política Account lockout threshold.
+1. Defino la cantidad de intentos fallidos.
+
+    ![vm-130](/Images/Screenshot_130.png)
+
+1. Opcionalmente podemos configurar estas opciones.
+
+    ![vm-131](/Images/Screenshot_131.png)
+
+1. Nos quedaria así.
+
+    ![vm-132](/Images/Screenshot_132.png)
+
+### Probando si funciona el bloqueo
+
+![vm-133](/Images/Screenshot_133.png)
+
+### Desbloqueado a este usuario
+
+![vm-134](/Images/Screenshot_134.png)
+![vm-135](/Images/Screenshot_135.png)
 
 
 
