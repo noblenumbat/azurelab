@@ -1,5 +1,6 @@
 # Contenido
 
+## PARTE I: Lab corriendo en Azure
 1. [Así configuré una máquina virtual con Windows Server 2022 en Azure](#así-configuré-una-máquina-virtual-con-windows-server-2022-en-azure)
 2. [Agregar el rol de Active Directory](#agregar-el-rol-de-active-directory)
 3. [Promover mi servidor como controlador de dominio](#promover-mi-servidor-como-controlador-de-dominio)
@@ -8,6 +9,8 @@
 6. [Crear y eliminar usuarios en Active Directory](#crear-y-eliminar-usuarios-en-active-directory)
 7. [Solucionando el inicio de sesión remoto con una de las cuentas creadas](#solucionando-el-inicio-de-sesión-remoto-con-una-de-las-cuentas-creadas)
 8. [Configurando la política de seguridad para intentos fallidos con contraseñas no válidas](#configurando-la-política-de-seguridad-para-intentos-fallidos-con-contraseñas-no-válidas)
+## PARTE II: Abandonando Azure por costos de suscripción
+9. [Implementación de un tunel con tailscale](#implementación-de-un-tunel-con-tailscale) 
 
 ---
 
@@ -403,6 +406,41 @@ Resulta el primer error al tratar de iniciar sesión remotamente.
 ![vm-134](/Images/Screenshot_134.png)
 ![vm-135](/Images/Screenshot_135.png)
 
+# Implementación de un tunel con tailscale
+
+Decidi abandonar mi VM en Azure, por costos de suscripción 🥲, y en su lugar instale mi propia maquina conectada a internet con tailscale, la cual es accesible remotamente a través de una VPN con tailscale que me permite acceder de forma desantendida con una ip pública, todo free.
+
+Solo hice un cambio en el nombre del dominio de `jcastillo.com` a `jcastillo.local` solo por convención, de resto todo sigue igual.
+
+![vm-136](/Images/Screenshot_136.png)
+
+![vm-137](/Images/Screenshot_137.png)
+
+![vm-138](/Images/Screenshot_138.png)
+
+### Identificar desde que equipo se esta bloqueando la cuenta ID 4740 
+
+1. Ingresar al `Visor de eventos` desde el servidor de controlador de dominio.
+2. Desplegar: `Registros de Windows->Seguridad`
+   ![vm-139](/Images/Screenshot_139.png)
+
+3. `Filtrar registro actual`
+4. Incluir el ID `4740`
+   ![vm-140](/Images/Screenshot_140.png)
+
+5. Vemos el que el equipo autor de la llamada que ocasiona el bloque es: `Thalia`.
+   ![vm-141](/Images/Screenshot_141.png)
+   ![vm-142](/Images/Screenshot_142.png)
+
+### Restablecer contraseñas de cuentas de usuario
+
+Desde el Centro de Administración de Active Directory, ingresar a Users, escribir el dominio y el nombre de usuaro `dominio\nombreUsuario`, escribir y confirmar la nueva contraseña y además, por seguridad activar la opción para que el usuario cambie la contraseña en el próximo inicio de sesión.
+
+![vm-143](/Images/Screenshot_143.png)
+
+Listo!
+
+![vm-144](/Images/Screenshot_144.png)
 
 
 
